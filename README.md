@@ -200,6 +200,48 @@ rails db:create
 
 So it seems that everything is working.
 
+## Create and populate a table ##
+In order to connect our [**Rails**](https://github.com/rails/rails) application with the [**PostgreSQL**](https://www.postgresql.org/) inside [**Docker**](https://www.docker.com/) we need to set up different things.
+
+### Configurating the routes ###
+As we are building a web application we need to set up what should happen when opening up the application:
+
+```ruby
+Rails.application.routes.draw do
+  root "articles#index"
+  get "/articles", to: "articles#index"
+end
+```
+
+In this case the **articles** **index** page will be the default (**root**) route to take.
+
+### Creating the applciation controller ###
+Calling a route will lead to call a controller in rails that should invoke a model in order to display data. As we don't have it right now we need to create it. Luckily rails can use scaffolding to make this easy:
+
+```bash
+bin/rails generate controller Articles index --skip-routes
+bin/rails generate model Article title:string body:text
+```
+
+### Migrating the database ###
+Generating a model will lead to generate the related database migration files as well. And the database needs to be migrated in order to make everything work:
+
+```bash
+rails db:migrate
+```
+
+In order to verify that everything worked we can use the [**PostgreSQL**](https://www.postgresql.org/) as we did before. Now you should see something like this:
+
+```
+blogpg=> \dt
+               List of relations
+ Schema |         Name         | Type  | Owner  
+--------+----------------------+-------+--------
+ public | ar_internal_metadata | table | blogpg
+ public | articles             | table | blogpg
+ public | schema_migrations    | table | blogpg
+```
+
 ## Links
 - [**"Setup a Rails Project with Postgres and Docker"**](https://danielabaron.me/blog/rails-postgres-docker/) - The blogpost that I worked through in order to understand how this works
 - [**Rails**](https://github.com/rails/rails) - The framework used to create the blog
