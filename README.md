@@ -161,6 +161,45 @@ database-1  | 2025-01-30 16:50:29.752 UTC [62] LOG:  database system was shut do
 database-1  | 2025-01-30 16:50:29.756 UTC [1] LOG:  database system is ready to accept connections
 ```
 
+## Creating the database ##
+Creating the initial database in [**Rails**](https://github.com/rails/rails) is easy. Just execute
+
+```bash
+rails db:create
+```
+
+and you should have a working [**PostgreSQL**](https://www.postgresql.org/) database inside [**Docker**](https://www.docker.com/). Let's check it. Just open a new terminal window and use the [**PostgreSQL**](https://www.postgresql.org/) we have installed using [**homebrew**](https://brew.sh/):
+
+```bash
+psql -h 127.0.0.1 -p 5434 -U blogpg
+# enter password from init.sql
+```
+
+Use the \l command to list all databases and you should see the folling:
+
+```
+blogpg=> \l
+                                                     List of databases
+    Name     |  Owner   | Encoding | Locale Provider |  Collate   |   Ctype    | Locale | ICU Rules |   Access privileges   
+-------------+----------+----------+-----------------+------------+------------+--------+-----------+-----------------------
+ blogpg      | blogpg   | UTF8     | libc            | en_US.utf8 | en_US.utf8 |        |           | 
+ blogpg_test | blogpg   | UTF8     | libc            | en_US.utf8 | en_US.utf8 |        |           | 
+ postgres    | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |        |           | 
+ template0   | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |        |           | =c/postgres          +
+             |          |          |                 |            |            |        |           | postgres=CTc/postgres
+ template1   | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |        |           | =c/postgres          +
+             |          |          |                 |            |            |        |           | postgres=CTc/postgres
+(5 rows)
+```
+
+**blogpg** and **blogpg** have been created using
+
+```bash
+rails db:create
+```
+
+So it seems that everything is working.
+
 ## Links
 - [**"Setup a Rails Project with Postgres and Docker"**](https://danielabaron.me/blog/rails-postgres-docker/) - The blogpost that I worked through in order to understand how this works
 - [**Rails**](https://github.com/rails/rails) - The framework used to create the blog
