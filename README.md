@@ -242,6 +242,34 @@ blogpg=> \dt
  public | schema_migrations    | table | blogpg
 ```
 
+## Let's add some data ##
+Till now our database is empty. Thanks to rails there is a nice way to add some data. Let's use
+
+```bash
+rails console
+```
+
+Now we can add some data:
+
+```ruby
+Article.create(
+  title: "Hello Postgres Docker",
+  body: "I'm being created in Postgres running in a Docker container"
+)
+```
+
+Let's validate that we have the data in our database:
+
+```
+blogpg=> select * from articles;
+ id |         title         |                            body                             |         created_at         |         updated_at         
+----+-----------------------+-------------------------------------------------------------+----------------------------+----------------------------
+  1 | Hello Postgres Docker | I'm being created in Postgres running in a Docker container | 2025-01-30 16:59:09.497067 | 2025-01-30 16:59:09.497067
+(1 row)
+```
+
+As you can see the data is there.
+
 ## Links
 - [**"Setup a Rails Project with Postgres and Docker"**](https://danielabaron.me/blog/rails-postgres-docker/) - The blogpost that I worked through in order to understand how this works
 - [**Rails**](https://github.com/rails/rails) - The framework used to create the blog
