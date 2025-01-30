@@ -270,6 +270,43 @@ blogpg=> select * from articles;
 
 As you can see the data is there.
 
+## Let's see... ##
+In order to be able to see our data in the web application we need to tell the rails application what to display. We do this in the related controller:
+
+```ruby
+# app/controllers/articles_controller.rb
+class ArticlesController < ApplicationController
+  def index
+    @articles = Article.all
+  end
+end
+```
+
+Now we need to tell rails how to display this data. Therefore we have to modify the related view file in a way we like:
+
+```erb
+<!-- app/views/articles/index.html.erb -->
+<h1>Articles</h1>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Body</th>
+  </tr>
+  <% @articles.each do |article| %>
+    <tr>
+      <td><%= article.title %></td>
+      <td><%= article.body %></td>
+    </tr>
+  <% end %>
+</table>
+```
+
+If you open the webbrower on **127.0.0.1:3000** you should see this:
+
+![Overview of articles](rails-postgres-docker-articles-index.png)
+
+Congratulations! You're done setting everything up using [**PostgreSQL**](https://www.postgresql.org/) inside a [**Docker**](https://www.docker.com/) container.
+
 ## Links
 - [**"Setup a Rails Project with Postgres and Docker"**](https://danielabaron.me/blog/rails-postgres-docker/) - The blogpost that I worked through in order to understand how this works
 - [**Rails**](https://github.com/rails/rails) - The framework used to create the blog
